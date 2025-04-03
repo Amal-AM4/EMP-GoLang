@@ -1,0 +1,13 @@
+# Ignore node_modules
+frontend/node_modules/
+
+# Ignore build files
+build/
+
+# Ignore Wails compiled files
+frontend/dist/
+
+# Ignore Go binaries
+*.exe
+*.test
+*.out

@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    color: #111;
+    font-size: 18px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    margin-left: 24px;
+}
