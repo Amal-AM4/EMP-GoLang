@@ -67,9 +67,9 @@ func (e *EmployeeService) GetEmployee(id int) (Employee, error) {
 }
 
 // UpdateEmployee - Update employee details
-func (e *EmployeeService) UpdateEmployee(id int, name string, age int, position string) error {
-	query := "UPDATE employees SET name = ?, age = ?, position = ? WHERE id = ?"
-	_, err := e.DB.Exec(query, name, age, position, id)
+func (e *EmployeeService) UpdateEmployee(id int, name string, age int, position string, salary int) error {
+	query := "UPDATE employees SET name = ?, age = ?, position = ?, salary = ? WHERE id = ?"
+	_, err := e.DB.Exec(query, name, age, position, salary, id)
 	if err != nil {
 		return err
 	}

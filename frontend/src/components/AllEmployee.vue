@@ -9,6 +9,7 @@
                     <th>Age</th>
                     <th>Position</th>
                     <th>Salary</th>
+                    <th>View</th>
                     <th>Edit</th>
                     <th>Remove</th>
                 </tr>
@@ -20,6 +21,9 @@
                     <td>{{ employee.age }}</td>
                     <td>{{ employee.position }}</td>
                     <td>₹{{ employee.salary.toLocaleString() }}</td>
+                    <td>
+                        <RouterLink :to="`/single/${employee.id}`" class="edit-btn">View</RouterLink>
+                    </td>
                     <td>
                         <RouterLink :to="`/edit/${employee.id}`" class="edit-btn">Edit</RouterLink>
                     </td>

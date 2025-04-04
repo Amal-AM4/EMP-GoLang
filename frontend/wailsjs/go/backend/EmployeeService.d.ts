@@ -10,4 +10,4 @@ export function GetEmployee(arg1:number):Promise<backend.Employee>;
 
 export function GetEmployees():Promise<Array<backend.Employee>>;
 
-export function UpdateEmployee(arg1:number,arg2:string,arg3:number,arg4:string):Promise<void>;
+export function UpdateEmployee(arg1:number,arg2:string,arg3:number,arg4:string,arg5:number):Promise<void>;

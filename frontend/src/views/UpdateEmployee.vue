@@ -11,6 +11,7 @@
             :isUpdate="true"
             @employeeUpdated="goBack"
         />
+
     </div>
 </template>
 
@@ -33,10 +34,11 @@ const fetchEmployee = async () => {
     }
 };
 
+onMounted(fetchEmployee);
+
 const goBack = () => {
-    alert("Employee updated successfully!");
     router.push("/"); // Redirect back to employee list
 };
 
-onMounted(fetchEmployee);
+
 </script>

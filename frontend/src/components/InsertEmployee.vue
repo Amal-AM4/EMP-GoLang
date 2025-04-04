@@ -47,14 +47,20 @@ const localPosition = ref(props.position || "");
 const localSalary = ref(props.salary || "");
 
 // Watch for changes in props and update local state
-watch(props, (newProps) => {
-    localName.value = newProps.name;
-    localAge.value = newProps.age;
-    localPosition.value = newProps.position;
-    localSalary.value = newProps.salary;
-});
+watch(
+  () => [props.name, props.age, props.position, props.salary],
+  ([newName, newAge, newPosition, newSalary]) => {
+    localName.value = newName || "";
+    localAge.value = newAge || "";
+    localPosition.value = newPosition || "";
+    localSalary.value = newSalary || "";
+  },
+  { immediate: true }
+);
+
 
 const submitForm = async () => {
+    const salaryValue = parseInt(localSalary.value) || 0;
     try {
         if (props.isUpdate) {
             // ✅ Update existing employee
@@ -63,7 +69,7 @@ const submitForm = async () => {
                 localName.value,
                 parseInt(localAge.value),
                 localPosition.value,
-                parseInt(localSalary.value)
+                salaryValue
             );
             alert("Employee updated successfully!");
         } else {
