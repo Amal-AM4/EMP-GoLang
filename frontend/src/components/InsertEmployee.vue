@@ -3,55 +3,95 @@
         <form @submit.prevent="submitForm">
             <div class="form-group">
                 <label>Employee Name</label>
-                <input type="text" v-model="name" required placeholder="Enter name of employee">
+                <input type="text" v-model="localName" required placeholder="Enter name of employee">
             </div>
             <div class="form-group">
                 <label>Age</label>
-                <input type="number" v-model="age" required placeholder="Enter your age">
+                <input type="number" v-model="localAge" required placeholder="Enter your age">
             </div>
             <div class="form-group">
                 <label>Position</label>
-                <input type="text" v-model="position" required placeholder="Enter your company position">
+                <input type="text" v-model="localPosition" required placeholder="Enter your company position">
             </div>
             <div class="form-group">
                 <label>Salary</label>
-                <input type="number" v-model="salary" placeholder="Rs. 0">
+                <input type="number" v-model="localSalary" placeholder="Rs. 0">
             </div>
-            <button>Upload Data</button>
+            <button>{{ isUpdate ? "Update Employee" : "Upload Data" }}</button>
         </form>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { AddEmployee } from "../../wailsjs/go/backend/EmployeeService";
+import { ref, defineProps, defineEmits, watch } from "vue";
+import { AddEmployee, UpdateEmployee } from "../../wailsjs/go/backend/EmployeeService";
+import { useRouter } from "vue-router";
 
-const name = ref("")
-const age = ref("")
-const position = ref("")
-const salary = ref("")
+const router = useRouter();
+
+const props = defineProps({
+    id: Number, // Employee ID (only for update)
+    name: String,
+    age: Number,
+    position: String,
+    salary: Number,
+    isUpdate: Boolean, // To differentiate between Add & Update mode
+});
+
+const emit = defineEmits(["employeeUpdated"]); // Emit event after update
+
+// Create local refs to handle form data separately
+const localName = ref(props.name || "");
+const localAge = ref(props.age || "");
+const localPosition = ref(props.position || "");
+const localSalary = ref(props.salary || "");
+
+// Watch for changes in props and update local state
+watch(props, (newProps) => {
+    localName.value = newProps.name;
+    localAge.value = newProps.age;
+    localPosition.value = newProps.position;
+    localSalary.value = newProps.salary;
+});
 
 const submitForm = async () => {
     try {
-        const response = await AddEmployee(
-            name.value,
-            parseInt(age.value),
-            position.value,
-            parseInt(salary.value)
-        );
+        if (props.isUpdate) {
+            // ✅ Update existing employee
+            await UpdateEmployee(
+                props.id,
+                localName.value,
+                parseInt(localAge.value),
+                localPosition.value,
+                parseInt(localSalary.value)
+            );
+            alert("Employee updated successfully!");
+        } else {
+            // ✅ Add new employee
+            await AddEmployee(
+                localName.value,
+                parseInt(localAge.value),
+                localPosition.value,
+                parseInt(localSalary.value)
+            );
+            alert("Employee added successfully!");
+            router.push("/"); // Redirect back to employee list
+        }
 
-        name.value = ""
-        age.value = ""
-        position.value = ""
-        salary.value = ""
+        // Emit event for update
+        emit("employeeUpdated");
 
-        alert("Data is inserted"); // ✅ Show success message
+        // Reset form (only if adding)
+        if (!props.isUpdate) {
+            localName.value = "";
+            localAge.value = "";
+            localPosition.value = "";
+            localSalary.value = "";
+        }
     } catch (error) {
         alert("Error: " + error);
     }
 };
-
-
 </script>
 
 <style lang="scss">
