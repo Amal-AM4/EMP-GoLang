@@ -40,6 +40,9 @@
 import { RouterLink } from 'vue-router'
 import { onMounted, ref } from "vue";
 import { GetEmployees, DeleteEmployee } from '../../wailsjs/go/backend/EmployeeService'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const employees = ref([])
 
@@ -56,6 +59,7 @@ const removeEmployee = async (id) => {
         try {
             await DeleteEmployee(id); // ✅ Call Wails API
             employees.value = employees.value.filter(emp => emp.id !== id); // ✅ Update UI
+            toast.success("Removed successful")
         } catch (error) {
             console.error("Failed to delete employee:", error);
         }

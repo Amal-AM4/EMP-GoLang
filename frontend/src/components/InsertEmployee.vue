@@ -26,8 +26,10 @@
 import { ref, defineProps, defineEmits, watch } from "vue";
 import { AddEmployee, UpdateEmployee } from "../../wailsjs/go/backend/EmployeeService";
 import { useRouter } from "vue-router";
+import { useToast } from 'vue-toastification'
 
 const router = useRouter();
+const toast = useToast();
 
 const props = defineProps({
     id: Number, // Employee ID (only for update)
@@ -71,7 +73,8 @@ const submitForm = async () => {
                 localPosition.value,
                 salaryValue
             );
-            alert("Employee updated successfully!");
+            toast.info("Employee data is updated!")
+            
         } else {
             // ✅ Add new employee
             await AddEmployee(
@@ -80,7 +83,7 @@ const submitForm = async () => {
                 localPosition.value,
                 parseInt(localSalary.value)
             );
-            alert("Employee added successfully!");
+            toast.success("Employee added successfully!")
             router.push("/"); // Redirect back to employee list
         }
 
