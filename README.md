@@ -1,19 +1,42 @@
-# README
+# About
+This is a simple study case project demonstrating how to create a desktop application using the Wails framework. The project integrates Vue.js for the frontend and Golang for the backend, using SQLite3 as the database. Wails supports HTML, CSS, JavaScript, and modern frontend frameworks.
 
-## About
+# Technologies Used
+* Vue.js – Frontend framework
+* Golang – Backend language
+* SQLite3 – Database
+* Wails – Go-based framework for building desktop applications
 
-This is the official Wails Vue template.
+# Installation & Setup
+## Prerequisites
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+Ensure you have the following **installed**:
+- Go (latest version)
+- Node.js & npm (for Vue.js)
+- Wails CLI (go install github.com/wailsapp/wails/v2/cmd/- wails@latest)
+***
+# Running the Project
+## Live Development Mode
+To run the project in live development mode with hot reload:
+```sh 
+wails dev 
+```
 
-## Live Development
+## Building for Production
+To build a redistributable production package:
+```sh
+wails build
+```
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+This will generate an optimized binary suitable for distribution.
 
-## Building
-
-To build a redistributable, production mode package, use `wails build`.
+# Project Structure
+```sh
+├── frontend/   # Vue.js frontend
+├── backend/    # Golang backend
+├── wails.json  # Wails configuration
+├── main.go     # Entry point for the application
+└── README.md   # Project documentation
+```
+**License**
+This project is open-source and available under the *MIT License.*
